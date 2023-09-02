@@ -8,3 +8,6 @@ In order to get the data, the combined use of the following three repositories a
 
 First, you can download the publicly available mp3 files found in the Internet Archive. This is done using the [SALAMI_download.py](https://github.com/DDMAL/SALAMI/blob/main/SALAMI_download.py) and [id_index_internetarchive.csv](https://github.com/DDMAL/salami-data-public/blob/master/metadata/id_index_internetarchive.csv) files. An updated version of the SALAMI_download.py file (compatible with Python3) can be found in the [data](https://github.com/nfriche/thesis/tree/main/data) folder of this branch. 
 
+## Matching Data to Annotations
+To match the mp3 files you download to the SALAMI annotations, you'll first want to download the [annotations](https://github.com/DDMAL/salami-data-public/tree/master/annotations) folder. 
+
