@@ -19,7 +19,7 @@ def random_interact_delay(min_delay, max_delay):
 download_directory = "C:/WRITE_YOUR_OWN_DIRECTORY"
 
 ## Specify the path to chromedriver.exe
-chromedriver_path = "C://WRITE_WHERE_YOUR_CHROMEDRIVER_IS"
+chromedriver_path = "C:/WRITE_WHERE_YOUR_CHROMEDRIVER_IS"
 
 ## Create a Chrome service with the specified chromedriver path
 chrome_service = ChromeService(executable_path=chromedriver_path)
