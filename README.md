@@ -9,7 +9,7 @@ Download the files into a directory and run the following command from that dire
 python link_scraper.py
 ```
 
-This will generate a csv file of 2000 URLs you can use to download the PDF and MIDI files. This csv file is also available in the data folder if you run into any issues with the link scraping file. Using this csv file, you can then run the musescore_scraper.py file in order to download the metadata, PDF, and MIDI files of all the links you just obtained. 
+This will generate a csv file of 2000 URLs you can use to download the PDF and MIDI files. This csv is also available in the data folder if you run into any issues with the link scraping script. Using this csv, you can then run musescore_scraper.py in order to download the metadata, PDF, and MIDI files of all the links you just obtained. 
 
 ```
 python musescore_scraper.py
