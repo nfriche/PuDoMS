@@ -23,7 +23,7 @@ def random_interact_delay(min_delay, max_delay):
     time.sleep(delay)
 
 ## Specify the directory where files will be downloaded
-download_directory = "C:\\Users\\nikit\\escraping_hell"
+download_directory = "C:\\WRITE_YOUR_DIRECTORY_HERE"
 
 ## Create directories for PDF and MIDI if they don't exist
 pdf_directory = os.path.join(download_directory, "PDF")
@@ -36,7 +36,7 @@ metadata_file = os.path.join(download_directory, "metadata.csv")
 metadata_exists = os.path.exists(metadata_file)
 
 ## Specify the path to chromedriver.exe
-chromedriver_path = "C:\\Users\\nikit\\chromedriver-win32\\chromedriver.exe"
+chromedriver_path = "C:\\WRITE_WHERE_YOUR_CHROMEDRIVER_IS"
 
 ## Create a Chrome service with the specified chromedriver path
 chrome_service = ChromeService(executable_path=chromedriver_path)
