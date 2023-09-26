@@ -68,7 +68,8 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
         #counter = 0
         for index, row in enumerate(csv_reader, start=1):
             #counter += 1
-            #if counter < 22:
+            ## Start at URL you left off 
+            #if counter < 20:
                 #continue
             url = row['URL']
             ## Open the MuseScore website for the current URL
