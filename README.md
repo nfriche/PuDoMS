@@ -9,6 +9,7 @@ python link_scraper.py
 ```
 
 This will generate a csv file of 2000 URLs you can use to download the PDF and MIDI files. This csv is also available in the data folder if you run into any issues with the link scraping script. Using this csv, you can then run musescore_scraper.py in order to download the metadata, PDF, and MIDI files of all the links you just obtained. 
+
 *Prequisites: Create a MuseScore account in order to be able to download files and modify the code to include your username and password.
 Please note that MuseScore has a download limit of 20 per day so you will only be able to run this code in batches of 20 URLs. Make sure to respect their download limitations.
 
