@@ -12,6 +12,7 @@ This will generate a csv file of 2000 URLs you can use to download the PDF and M
 
 *Prequisites: Create a MuseScore account in order to be able to download files and modify the code to include your username and password.
 Please note that MuseScore has a download limit of 20 per day so you will only be able to run this code in batches of 20 URLs. Make sure to respect their download limitations.
+Additionally, the ID for the download button changes on a daily basis so be sure to update the two occurences in the code with the up-to-date ID. 
 
 ```
 python musescore_scraper.py
