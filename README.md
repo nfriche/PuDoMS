@@ -1,6 +1,6 @@
 # Thesis
 **Please note that all provided commands are suitable for a Windows system and may need modification if ran on anything else.
-## Downloading Data
+## Downloading the Data
 In order to get the data using the given scripts, you must have Chrome and ChromeDriver installed. Make sure the versions match up. 
 Download the files into a directory and run the following command from that directory in your command prompt.
 
@@ -17,3 +17,5 @@ Additionally, the ID for the download button changes on a daily basis so be sure
 ```
 python musescore_scraper.py
 ```
+
+## Preprocessing the Data
