@@ -100,30 +100,47 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
                 login_done = True
                 login_done = True  ## Set the flag to True after logging in 
 
-            ## Scrape metadata information from the website
+                        ## Scrape metadata information from the website
             try:
                 ## Find elements using their XPATHs
                 title_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div[2]/section[1]/h3[1]/a')
                 ## Extract the text from the elements
                 title = title_element.text.strip()
             except NoSuchElementException:
-                ## Handle the case where an element is not found by assigning an empty string
-                title = ""
+                    try:
+                        ## Try the second XPath expression here
+                        title_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[4]/div[2]/section[1]/h3[1]/a')
+                        title = title_element.text.strip()
+                    except NoSuchElementException:
+                        ## Handle the case when both XPath expressions don't exist
+                        title = ""
             try:
                 composer_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div[2]/section[1]/h3[2]/a')
                 composer = composer_element.text.strip()
             except NoSuchElementException:
-                composer = ""
+                    try:
+                        composer_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[4]/div[2]/section[1]/h3[2]/a')
+                        composer = composer_element.text.strip()
+                    except NoSuchElementException:
+                        composer = ""
             try:
                 pages_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[1]/td/div')
                 pages = pages_element.text.strip()
             except NoSuchElementException:
-                pages = ""
+                    try:
+                        pages_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[5]/div[2]/table/tbody/tr[1]/td/div')
+                        pages = pages_element.text.strip()
+                    except NoSuchElementException:
+                        pages = ""
             try:    
                 duration_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[2]/td/div')
                 duration = duration_element.text.strip()
             except NoSuchElementException: 
-                duration = ""
+                    try:
+                        duration_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[5]/div[2]/table/tbody/tr[2]/td/div')
+                        duration = duration_element.text.strip()
+                    except NoSuchElementException:
+                        duration = ""
             try:
                 desc_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/div')
                 ## Use Beautiful Soup to replace <br> tags with spaces in the description
