@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
+from seleniumbase import Driver
 
 ## Function to add a random break or delay while interacting with website
 def random_interact_delay(min_delay, max_delay):
@@ -19,7 +20,8 @@ def random_interact_delay(min_delay, max_delay):
     time.sleep(delay)
 
 ## Specify the directory where files will be downloaded
-download_directory = "C:\\WRITE_YOUR_DIRECTORY_HERE"
+download_directory = "C:\\WRITE\\YOUR\\OWN\\DIRECTORY\\HERE"
+temp = "C:\\WRITE\\YOUR\\OWN\\DIRECTORY\\HERE\\downloaded_files"
 
 ## Create directories for PDF and MIDI if they don't exist
 pdf_directory = os.path.join(download_directory, "PDF")
@@ -32,26 +34,26 @@ metadata_file = os.path.join(download_directory, "metadata.csv")
 metadata_exists = os.path.exists(metadata_file)
 
 ## Specify the path to chromedriver.exe
-chromedriver_path = "C:\\WRITE_WHERE_YOUR_CHROMEDRIVER_IS"
+chromedriver_path = "C:\\WRITE\\YOUR\\OWN\\PATH\\HERE"
 
 ## Create a Chrome service with the specified chromedriver path
 chrome_service = ChromeService(executable_path=chromedriver_path)
 
-## Create a Chrome WebDriver instance with custom download settings
-chrome_options = webdriver.ChromeOptions()
-prefs = {"download.default_directory": "C:\\WRITE_YOUR_DIRECTORY_HERE"}
-chrome_options.add_experimental_option("prefs", prefs)
-## Set a custom User-Agent header to further avoid getting IP blocked
-chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36")
-# chrome_options.add_experimental_option("prefs", {
-#     "download.default_directory": download_directory,
-#     "download.prompt_for_download": False,
-#     "download.directory_upgrade": True,
-#     "safebrowsing.enabled": True
-# })
-
 ## Create a Chrome WebDriver instance with the specified chromedriver path and options
-driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+driver = Driver(uc=True)
+
+## Initialize counters for PDF and MIDI files
+pdf_count = 0
+midi_count = 0
+
+## Determine the last downloaded MIDI file number in order to know where to start from 
+midi_files = glob.glob(os.path.join(midi_directory, '*.midi'))
+if midi_files:
+    last_midi_file = max(midi_files, key=lambda x: int(os.path.basename(x).split(".")[0]))
+    last_midi_number = int(os.path.basename(last_midi_file).split(".")[0]) + 1
+else:
+    ## Start from the first URL if no MIDI files
+    last_midi_number = 0  
 
 ## Open CSV in order to append metadata
 with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
@@ -65,12 +67,11 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         ## Flag to check if login has been done
         login_done = False
-        #counter = 0
         for index, row in enumerate(csv_reader, start=1):
-            #counter += 1
-            ## Start at URL you left off 
-            #if counter < 20:
-                #continue
+            ## Skip URLs before the determined MIDI number
+            #if index < 901
+            if index < last_midi_number:
+                continue  
             url = row['URL']
             ## Open the MuseScore website for the current URL
             driver.get(url)
@@ -91,84 +92,126 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
                 login_button.click()
                 ## Simulate typing username
                 username_input = WebDriverWait(driver, 2.5).until(EC.presence_of_element_located((By.XPATH, '//*[@id="username"]')))
-                username_input.send_keys('YOUR_USERNAME_HERE')
+                username_input.send_keys('GET_YOUR_USERNAME')
                 ## Simulate typing password
                 password_input = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.XPATH, '//*[@id="password"]')))
-                password_input.send_keys('YOUR_PASSWORD_HERE')
+                password_input.send_keys('GET_YOUR_OWN_PASSWORD')
                 login = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="user-login-form"]/div/section[1]/button/span')))
                 login.click()
-                login_done = True
-                login_done = True  ## Set the flag to True after logging in 
+                ## Set the flag to True after logging in 
+                login_done = True  
 
-                        ## Scrape metadata information from the website
+
+            ## Scrape metadata information from the website
             try:
                 ## Find elements using their XPATHs
-                title_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div[2]/section[1]/h3[1]/a')
+                title_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/section[1]/h3[1]/a')
                 ## Extract the text from the elements
                 title = title_element.text.strip()
             except NoSuchElementException:
                     try:
                         ## Try the second XPath expression here
-                        title_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[4]/div[2]/section[1]/h3[1]/a')
+                        title_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/section[1]/h3[1]/a')
                         title = title_element.text.strip()
                     except NoSuchElementException:
-                        ## Handle the case when both XPath expressions don't exist
-                        title = ""
+                        try:
+                            ## Try the third XPath expression here
+                            title_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div[2]/section[1]/h3[1]/a')
+                            title = title_element.text.strip()
+                        except NoSuchElementException:
+                            try:
+                                ## Try the fourth XPath expression here
+                                title_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/section/h3[1]/a')
+                                title = title_element.text.strip()
+                            except NoSuchElementException:
+                                ## Handle the case when both XPath expressions don't exist
+                                title = ""
+
             try:
-                composer_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div[2]/section[1]/h3[2]/a')
+                composer_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/section[1]/h3[2]/a')
                 composer = composer_element.text.strip()
             except NoSuchElementException:
                     try:
-                        composer_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[4]/div[2]/section[1]/h3[2]/a')
+                        composer_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/section[1]/h3[2]/a')
                         composer = composer_element.text.strip()
                     except NoSuchElementException:
-                        composer = ""
+                        try:
+                            composer_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div[2]/section[1]/h3[2]/a')
+                            composer = composer_element.text.strip()
+                        except NoSuchElementException:
+                            try:
+                                composer_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/section/h3[2]/a')
+                                composer = composer_element.text.strip()
+                            except NoSuchElementException:
+                                composer = ""
+
             try:
-                pages_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[1]/td/div')
-                pages = pages_element.text.strip()
-            except NoSuchElementException:
-                    try:
-                        pages_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[5]/div[2]/table/tbody/tr[1]/td/div')
-                        pages = pages_element.text.strip()
-                    except NoSuchElementException:
-                        pages = ""
-            try:    
-                duration_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[2]/td/div')
-                duration = duration_element.text.strip()
-            except NoSuchElementException: 
-                    try:
-                        duration_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[5]/div[2]/table/tbody/tr[2]/td/div')
-                        duration = duration_element.text.strip()
-                    except NoSuchElementException:
-                        duration = ""
-            try:
-                genre_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[5]/td/div/a')
+                genre_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/table/tbody/tr[5]/td/div/a')
                 genre = genre_element.text.strip()
             except NoSuchElementException:
                     try:
-                        genre_element = driver.find_element(By.XPATH, '/html/body/div[1]/div/section/aside/div[5]/div[2]/table/tbody/tr[5]/td/div/a')
+                        genre_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[8]/div[2]/table/tbody/tr[5]/td/div/a')
                         genre = genre_element.text.strip()
                     except NoSuchElementException:
-                        genre = ""
+                        try:
+                            genre_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[5]/td/div/a')
+                            genre = genre_element.text.strip()
+                        except NoSuchElementException:
+                            genre = ""
+                            
             try:
-                desc_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/div')
+                pages_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/table/tbody/tr[1]/td/div')
+                pages = pages_element.text.strip()
+            except NoSuchElementException:
+                    try:
+                        pages_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[8]/div[2]/table/tbody/tr[1]/td/div')
+                        pages = pages_element.text.strip()
+                    except NoSuchElementException:
+                        try:
+                            pages_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[1]/td/div')
+                            pages = pages_element.text.strip()
+                        except NoSuchElementException:
+                            pages = ""
+
+            try:    
+                duration_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/table/tbody/tr[2]/td/div')
+                duration = duration_element.text.strip()
+            except NoSuchElementException: 
+                    try:
+                        duration_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[8]/div[2]/table/tbody/tr[2]/td/div')
+                        duration = duration_element.text.strip()
+                    except NoSuchElementException:
+                        try:
+                            duration_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div[2]/table/tbody/tr[2]/td/div')
+                            duration = duration_element.text.strip()
+                        except NoSuchElementException:
+                            duration = ""
+
+            try:
+                difficulty_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[5]/div/div[2]')
+                difficulty = difficulty_element.text.strip()
+            except NoSuchElementException:
+                    try:
+                        difficulty_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[6]/div/div[2]')
+                        difficulty = difficulty_element.text.strip()
+                    except NoSuchElementException:
+                        difficulty = ""
+
+            try:
+                desc_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/div')
                 ## Use Beautiful Soup to replace <br> tags with spaces in the description
                 soup = BeautifulSoup(desc_element.get_attribute("innerHTML"), "html.parser")
                 desc = " ".join(soup.stripped_strings)
             except NoSuchElementException:
                 desc = ""
-            try:
-                difficulty_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[4]/div/div[2]')
-                difficulty = difficulty_element.text.strip()
-            except NoSuchElementException:
-                difficulty = ""
+
             except Exception as e:
                 print("Error scraping metadata:", e)
 
             ## Click the download button
-            ## Double check that the ID for the download button is accurate because MuseScore changes it quite frequently
+            ## Get ID for download button using one of the URLS. Keep in mind that MuseScore changes it on a daily basis
             try:
-                download_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, '108ebf34226fa63e2f9c28d571a71b05')))
+                download_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'GET_THE_ID')))
             except TimeoutException:
                 ## Handle the case where there is no download button
                 print(f"No download button found for URL {url}")
@@ -181,7 +224,7 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
             writer.writerow({'File_Number': index, 'Composer': composer, 'Title': title, 'Genre': genre, 'Difficulty': difficulty, 'Pages': pages, 'Duration': duration, 'Description': desc, 'Download_Status': ' '})
 
             ## Download PDF
-            pdf_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/section/section/div[2]/div/div[1]/h3/button/span')))
+            pdf_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[2]/div/div[1]/h3/button/span')))
             pdf_button.click()
 
             ## Check for an score sheet option popup and just download the full score if it appears
@@ -193,10 +236,10 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
                 print("Options popup did not appear")
 
             ## Wait for the PDF to download
-            random_interact_delay(10, 20)
+            random_interact_delay(10, 15)
 
             ## Find the last downloaded PDF file in the download directory
-            pdf_files = glob.glob(os.path.join(download_directory, '*.pdf'))
+            pdf_files = glob.glob(os.path.join(temp, '*.pdf'))
             latest_pdf = max(pdf_files, key=os.path.getmtime)
             ## Rename and move the last downloaded PDF file
             index_str = str(index)  
@@ -208,24 +251,33 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
             driver.refresh()
 
             ## Re-click download
+            ## Make sure to change ID again
             random_interact_delay(2, 5)
-            download_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, '108ebf34226fa63e2f9c28d571a71b05')))
+            download_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'GET_THE_ID')))
             download_button.click()
 
             ## Download MIDI
-            midi_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/section/section/div[4]/div/div[1]/h3/button/span')))
+            midi_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[4]/div/div[1]/h3/button/span')))
             midi_button.click()
 
             ## Wait for the MIDI to download
-            random_interact_delay(10, 20)
+            random_interact_delay(10, 15)
  
             ## Find the last downloaded MIDI file in the "escraping_hell" directory
-            midi_files = glob.glob(os.path.join(download_directory, '*.mid'))
+            midi_files = glob.glob(os.path.join(temp, '*.mid'))
             latest_midi = max(midi_files, key=os.path.getmtime)
             ## Rename and move the last downloaded MIDI file
             midi_new_name = f"{index_str}.midi"
             midi_new_path = os.path.join(midi_directory, midi_new_name)
             os.rename(latest_midi, midi_new_path)
+            
+            ## Increment the PDF and MIDI counters
+            pdf_count += 1
+            midi_count += 1
+
+            ## Check if the counters have reached 19 for both PDF and MIDI files
+            if pdf_count >= 19 and midi_count >= 19:
+                break
 
             ## Avoid making too many requests too quickly with random rate limit
             random_interact_delay(2, 5)
