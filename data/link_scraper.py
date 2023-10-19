@@ -39,6 +39,7 @@ chrome_options.add_experimental_option("prefs", {
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
 ## Open the MuseScore website
+## Can change filters to get different results, most you'll get is 2000 results at a time
 driver.get('https://musescore.com/sheetmusic?instrument=2&instrumentation=114&license=to_modify_commercially%2Cto_share%2Cto_use_commercially&recording_type=public-domain')
 
 ## Element's XPATH can be found by right-clicking and selecting "Inspect" in Chrome
