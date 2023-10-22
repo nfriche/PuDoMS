@@ -1,4 +1,4 @@
-1# Thesis
+# Thesis
 **Please note that all provided commands are suitable for a Windows system and may need modification if ran on anything else.
 ## Downloading the Data
 In order to get the data using the given scripts, you must have Chrome and ChromeDriver installed. Make sure the versions match up. 
