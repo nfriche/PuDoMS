@@ -224,7 +224,8 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
             writer.writerow({'File_Number': index, 'Composer': composer, 'Title': title, 'Genre': genre, 'Difficulty': difficulty, 'Pages': pages, 'Duration': duration, 'Description': desc, 'Download_Status': ' '})
 
             ## Download PDF
-            pdf_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[2]/div/div[1]/h3/button/span')))
+            ignored_exceptions=(NoSuchElementException, StaleElementReferenceException,)
+            pdf_button = WebDriverWait(driver, 30, ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[2]/div/div[1]/h3/button/span')))
             pdf_button.click()
 
             ## Check for an score sheet option popup and just download the full score if it appears
@@ -257,7 +258,7 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
             download_button.click()
 
             ## Download MIDI
-            midi_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[4]/div/div[1]/h3/button/span')))
+            midi_button = WebDriverWait(driver, 30, ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[4]/div/div[1]/h3/button/span')))
             midi_button.click()
 
             ## Wait for the MIDI to download
