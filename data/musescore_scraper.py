@@ -57,7 +57,7 @@ else:
 
 ## Open CSV in order to append metadata
 with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
-    fieldnames = ['File_Number','Composer', 'Title', 'Genre', 'Difficulty', 'Pages', 'Duration', 'Description', 'Download_Status']
+    fieldnames = ['File_Number','Composer', 'Title', 'Genre', 'Difficulty', 'Pages', 'Duration', 'Piano_Only', 'Download_Status']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
     if not metadata_exists:
@@ -197,14 +197,6 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
                     except NoSuchElementException:
                         difficulty = ""
 
-            try:
-                desc_element = driver.find_element(By.XPATH, '/html/body/div/div/section/aside/div[7]/div[2]/div')
-                ## Use Beautiful Soup to replace <br> tags with spaces in the description
-                soup = BeautifulSoup(desc_element.get_attribute("innerHTML"), "html.parser")
-                desc = " ".join(soup.stripped_strings)
-            except NoSuchElementException:
-                desc = ""
-
             except Exception as e:
                 print("Error scraping metadata:", e)
 
@@ -217,12 +209,10 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
                 print(f"No download button found for URL {url}")
                 fail = "FAILED"
                 ## Update metadata for this URL to indicate that no download was possible
-                writer.writerow({'File_Number': index, 'Composer': composer, 'Title': title, 'Genre': genre, 'Difficulty': difficulty, 'Pages': pages, 'Duration': duration, 'Description': desc, 'Download_Status': fail})
+                writer.writerow({'File_Number': index, 'Composer': composer, 'Title': title, 'Genre': genre, 'Difficulty': difficulty, 'Pages': pages, 'Duration': duration, 'Piano_Only': ' ', 'Download_Status': fail})
                 continue  
             download_button.click()
-            ## Append the scraped information to the CSV file
-            writer.writerow({'File_Number': index, 'Composer': composer, 'Title': title, 'Genre': genre, 'Difficulty': difficulty, 'Pages': pages, 'Duration': duration, 'Description': desc, 'Download_Status': ' '})
-
+            
             ## Download PDF
             ignored_exceptions=(NoSuchElementException, StaleElementReferenceException,)
             pdf_button = WebDriverWait(driver, 30, ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/section/section/div[2]/div/div[1]/h3/button/span')))
@@ -232,10 +222,16 @@ with open(metadata_file, mode='a', encoding='utf-8', newline='') as csv_file:
             try:
                 pdf_download = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/article/section/section/div/div[2]/div[2]/div/section/button/span')))
                 pdf_download.click() 
+                piano_only = "No"
             except TimeoutException:
                 ## Handle the case where the popup doesn't appear
                 print("Options popup did not appear")
+                piano_only = "Yes"
 
+            ## Append the scraped information to the CSV file
+            writer.writerow({'File_Number': index, 'Composer': composer, 'Title': title, 'Genre': genre, 'Difficulty': difficulty, 'Pages': pages, 'Duration': duration, 'Piano_Only': piano_only, 'Download_Status': ' '})
+
+            
             ## Wait for the PDF to download
             random_interact_delay(10, 15)
 
