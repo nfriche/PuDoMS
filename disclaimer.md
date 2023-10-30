@@ -1,6 +1,6 @@
 ## PuDoM Dataset Disclaimer
 
-The PuDoM (Public Domain MuseScore) dataset is provided for educational and research purposes, and it exclusively includes musical compositions that have been listed as "Public Domain" by MuseScore. 
+The PuDoM (Public Domain MuseScore) dataset is provided for educational and research purposes, and it exclusively includes musical compositions that have been listed as "Public Domain" by MuseScore. The PuDoM dataset is a separate and independent project and is not officially affiliated with MuseScore.
 By accessing and using the dataset, you agree to the following terms and conditions:
 
 - **No Warranty**: The files in this dataset are provided "as is," without any warranties or guarantees of any kind, either expressed or implied. 
