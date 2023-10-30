@@ -27,5 +27,4 @@ Users are encouraged to verify and validate the data for their specific applicat
 - **Data Updates**: This dataset may be subject to updates and revisions. 
 Users are encouraged to check for the latest version of the dataset and comply with any updated terms and conditions.
 
-By accessing and using this dataset, you acknowledge that you have read, understood, and agreed to these terms and conditions. 
-If you do not agree with these terms, please do not use this dataset.
+By accessing and using this dataset, you acknowledge that you have read, understood, and agreed to these terms and conditions. By accessing and using this dataset, you acknowledge that you have read, understood, and agreed to these terms and conditions. The PuDoM dataset is comprised exclusively of musical compositions listed as part of the public domain to minimize the risk of takedown requests. If you have concerns about specific compositions or believe that any content does not adhere to public domain regulations, please contact us for immediate review and removal, if necessary.
