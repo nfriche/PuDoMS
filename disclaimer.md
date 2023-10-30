@@ -1,10 +1,12 @@
-## Musescore Dataset Disclaimer
+## PuDoM Dataset Disclaimer
 
-The MuseScore dataset is provided for educational and research purposes. 
+The PuDoM (Public Domain MuseScore) dataset is provided for educational and research purposes, and it exclusively includes musical compositions that have been listed as "Public Domain" by MuseScore. 
 By accessing and using the dataset, you agree to the following terms and conditions:
 
-- **No Warranty**: The MIDI files in this dataset are provided "as is," without any warranties or guarantees of any kind, either expressed or implied. 
+- **No Warranty**: The files in this dataset are provided "as is," without any warranties or guarantees of any kind, either expressed or implied. 
 We do not warrant the accuracy, completeness, or reliability of the data.
+
+- **Public Domain Content**: This dataset only includes musical compositions that have been explicitly identified as "Public Domain" by MuseScore themselves. These songs and their relevant files can be downloaded free of charge on the MuseScore website and, according to MuseScore, do not violate the rights of any major music publishers. 
 
 - **Educational and Research Use**: This dataset is intended for educational and research purposes only. 
 It may not be used for commercial purposes, resale, or any other profit-generating activities without explicit permission.
