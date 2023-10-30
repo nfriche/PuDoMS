@@ -1,6 +1,6 @@
 ## Musescore Dataset Disclaimer
 
-This MIDI file dataset is provided for educational and research purposes. 
+The MuseScore dataset is provided for educational and research purposes. 
 By accessing and using the dataset, you agree to the following terms and conditions:
 
 - **No Warranty**: The MIDI files in this dataset are provided "as is," without any warranties or guarantees of any kind, either expressed or implied. 
