@@ -30,7 +30,7 @@ metadata_df = pd.read_csv('metadata.csv')
 merged_df = pd.concat([metadata_df, urls_df['URL']], axis=1)
 
 ## Directory containing MIDI files
-midi_folder_path = 'path_to_your_midi_files'  # Update this to your MIDI files folder path
+midi_folder_path = 'C:\\Users\\nikit\\escraping_hell\\super-cool-thesis\\data\\MIDI'
 
 ## Add a 'Monophonic' column with default value 'No'
 merged_df['Monophonic'] = 'No'
