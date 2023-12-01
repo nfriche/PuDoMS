@@ -6,25 +6,20 @@ import os
 def is_monophonic(midifile):
     ## Iterate through each track in the MIDI file
     for track in midifile.tracks:
-        ## Initialize a set to keep track of active notes
-        active_notes = set()
+        ## Track the number of notes playing at a time
+        notes_playing = 0
         ## Iterate through all messages in the track
         for msg in track:
-            ## Check if the message is not a meta message (like tempo or time signature)
-            if not msg.is_meta:
-                ## Check if the message is a note being played (note_on with velocity > 0)
-                if msg.type == 'note_on' and msg.velocity > 0:
-                    ## Check if there is already a note playing (set length >= 1)
-                    ## If so, return False as this means multiple notes are playing
-                    if len(active_notes) >= 1:
-                        return False
-                    ## Add the note to the set of active notes
-                    active_notes.add(msg.note)
-                ## Check if the message is a note release (note_off) or note_on with velocity 0
-                elif msg.type == 'note_off' or (msg.type == 'note_on' and msg.velocity == 0):
-                    ## Remove the note from the set of active notes
-                    active_notes.discard(msg.note)
-    ## If the function hasn't returned False, it means no polyphony was detected, return True
+            ## Check if the message is a note on and velocity > 0 (note start)
+            if msg.type == 'note_on' and msg.velocity > 0:
+                notes_playing += 1
+                ## If more than one note is playing, it's not monophonic
+                if notes_playing > 1:
+                    return False
+            ## Check if the message is a note off or note on with velocity 0 (note end)
+            elif msg.type == 'note_off' or (msg.type == 'note_on' and msg.velocity == 0):
+                notes_playing = max(0, notes_playing - 1)
+    ## If the track has no polyphony, it's monophonic
     return True
 
 ## Load the CSV files
@@ -35,7 +30,7 @@ metadata_df = pd.read_csv('metadata.csv')
 merged_df = pd.concat([metadata_df, urls_df['URL']], axis=1)
 
 ## Directory containing MIDI files
-midi_folder_path = 'C:\\Users\\nikit\\escraping_hell\\super-cool-thesis\\data\\MIDI'
+midi_folder_path = 'path_to_your_midi_files'  # Update this to your MIDI files folder path
 
 ## Add a 'Monophonic' column with default value 'No'
 merged_df['Monophonic'] = 'No'
