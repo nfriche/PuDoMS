@@ -38,14 +38,14 @@ for file in os.listdir(midi_folder_path):
     if file.endswith(".mid") or file.endswith(".midi"):
         path = os.path.join(midi_folder_path, file)
         mid = mido.MidiFile(path)
-        ## Check if file is monophonic and update the dataframe
+        file_number = file.split('.')[0]
+        ## Check data types and values
+        print(f"Processing file: {file}, File Number: {file_number}")
         if is_monophonic(mid):
-            ## Update the 'Monophonic' column based on the File_Number
-            file_number = file.split('.')[0]
+            print(f"File {file_number} is Monophonic")
             merged_df.loc[merged_df['File_Number'] == file_number, 'Monophonic'] = 'Yes'
         else:
-            ## If the file is not monophonic, ensure it's marked 'No'
-            file_number = file.split('.')[0]
+            print(f"File {file_number} is Not Monophonic")
             merged_df.loc[merged_df['File_Number'] == file_number, 'Monophonic'] = 'No'
 
 ## Save the updated dataframe to metadata.csv
