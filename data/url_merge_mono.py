@@ -8,7 +8,7 @@ metadata_df = pd.read_csv('metadata.csv')
 merged_df = pd.concat([metadata_df, urls_df['URL']], axis=1)
 
 ## Monophonic file numbers path 
-mono_folder_path = 'C:\\Users\\nikit\\escraping_hell\\super-cool-thesis\\data\\extra\\monophonic_midi_numbers.csv'
+mono_folder_path = 'C:\\Users\\nikit\\escraping_hell\\super-cool-thesis\\extras\\monophonic_midi_numbers.csv'
 
 ## Load the monophonic file numbers
 monophonic_files_df = pd.read_csv(mono_folder_path)
