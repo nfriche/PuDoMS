@@ -6,10 +6,11 @@ from sklearn.model_selection import train_test_split
 np.random.seed(0)
 
 ## Load the metadata file
-df = pd.read_csv('path_to_your_metadata_file.csv')
+df = pd.read_csv('metadata.csv')
 
-## Exclude rows where Piano_Only is No
-df = df[df['Piano_Only'] == 'Yes']
+## Exclude rows where piano isn't the only instrument
+instrument_filter = df['Instruments'].isin(['Piano', 'Piano (2)', 'Piano (3)'])
+df = df[instrument_filter]
 
 ## Assign initial splits based on your criteria
 df['Split'] = 'unassigned'
