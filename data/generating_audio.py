@@ -1,32 +1,52 @@
-import pandas as pd
 import os
-import subprocess
+import pandas as pd
+from midi2audio import FluidSynth
 
-# Define the function to convert MIDI to WAV using FluidSynth
-def midi_to_wav(midi_path, wav_path, soundfont_path):
-    command = f'fluidsynth -ni {soundfont_path} {midi_path} -F {wav_path} -r 44100'
-    subprocess.run(command, shell=True)
+# Paths
+midi_folder = "MIDI"
+sf2_folder = "sf2"
+sf2_file = os.path.join(sf2_folder, "Clean_Concert_Grand.sf2")  
+metadata_file = "updated_metadata_with_split.csv"
 
-# Load the dataset
-df = pd.read_csv('data/updated_metadata_with_split.csv')
+# Read metadata
+metadata = pd.read_csv(metadata_file)
 
-# Path to the MIDI files and soundfont
-midi_folder = 'data/MIDI'
-soundfont_path = 'path/to/your/soundfont.sf2'  # Update this with the actual path
+# Create folders if they don't exist
+for folder in ["train", "validation", "test"]:
+    os.makedirs(folder, exist_ok=True)
 
-# Create train, val, test folders
-for folder in ['train', 'val', 'test']:
-    os.makedirs(f'data/{folder}', exist_ok=True)
+# Initialize FluidSynth for MIDI to WAV conversion
+fs = FluidSynth(sf2_file)
 
-# Process files
-for index, row in df.iterrows():
-    if row['Split'] != 'excluded':
-        file_number = row['File_Number']
-        midi_file = f'{midi_folder}/{file_number}.mid'
-        wav_file = f'data/{row["Split"]}/{file_number}.wav'
+# Process each file
+for index, row in metadata.iterrows():
+    try:
+        # Check both possible file extensions
+        midi_file = f"{row['File_Number']}.midi"
+        original_path = os.path.join(midi_folder, midi_file)
+        if not os.path.exists(original_path):
+            # If .midi file doesn't exist, check for .mid file
+            midi_file = f"{row['File_Number']}.mid"
+            original_path = os.path.join(midi_folder, midi_file)
 
-        # Convert MIDI to WAV
-        midi_to_wav(midi_file, wav_file, soundfont_path)
+        # Check if the file exists and is not excluded
+        if os.path.exists(original_path) and row['Split'] in ['train', 'validation', 'test']:
+            # Define new path
+            new_path = os.path.join(row['Split'], midi_file)
+            
+            # Move MIDI file to the corresponding folder
+            os.rename(original_path, new_path)
+            print(f"Moved {midi_file} to {row['Split']} folder.")
+            
+            # Convert and save WAV file
+            wav_file = f"{row['File_Number']}.wav"
+            wav_path = os.path.join(row['Split'], wav_file)
+            fs.midi_to_audio(new_path, wav_path)
+            print(f"Converted {midi_file} to WAV and moved to {row['Split']} folder.")
+        else:
+            print(f"File {midi_file} does not exist or is excluded. Skipping...")
 
-        # Move MIDI file to the corresponding folder
-        os.rename(midi_file, f'data/{row["Split"]}/{file_number}.mid')
+    except Exception as e:
+        print(f"Error processing file number: {row['File_Number']}. Error: {e}")
+
+print("Conversion and organization completed.")
