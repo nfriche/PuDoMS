@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the losses from the CSV file
-df_losses = pd.read_csv('training_losses.csv')
+df_losses = pd.read_csv("training_losses.csv")
 
 # Calculate the total loss
 VEL_LOSS_LAMBDA = 10.0
