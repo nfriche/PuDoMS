@@ -2244,12 +2244,12 @@ File_Number,Composer,Title,Genre,Difficulty,Pages,Duration,Piano_Only,Download_S
 2243,Charles Leslie Johnson,Summer Breezes Waltzes,Classical,,6.0,06:05,Yes, ,https://musescore.com/user/3636436/scores/5501124,No,Piano,No,train
 2244,Percy Wenrich,The Chicago Express,Classical,,4.0,02:07,Yes, ,https://musescore.com/user/3636436/scores/5543809,No,Piano,No,train
 2245,Will B. Morrison,Candlelight Reverie,Classical,,4.0,02:32,Yes, ,https://musescore.com/user/3636436/scores/5553737,No,Piano,No,train
-2246,Percy Wenrich,Moon Kisses,Classical,,3.0,02:53,,FAILED ,https://musescore.com/user/3636436/scores/5579107,No,Piano,No,train
+2246,Percy Wenrich,Moon Kisses,Classical,,3.0,02:53,,FAILED,https://musescore.com/user/3636436/scores/5579107,No,Piano,No,excluded
 2247,Percy Wenrich,Sonora,Classical,Intermediate,5.0,04:11,Yes, ,https://musescore.com/user/3636436/scores/5585550,No,Piano,No,train
 2248,Robert R. Pattison,Harmony Waltz,Classical,Intermediate,2.0,01:51,Yes, ,https://musescore.com/user/3636436/scores/5589579,No,Piano,No,train
 2249,Ernest J. Schuster,Eileen,Classical,Intermediate,4.0,02:29,Yes, ,https://musescore.com/user/3636436/scores/5603507,No,Piano,No,train
 2250,Percy Wenrich,Blushes,Classical,Intermediate,4.0,03:46,Yes, ,https://musescore.com/user/3636436/scores/5625691,No,Piano,No,train
-2251,Percy Wenrich,By A Garden Gate,Classical,Intermediate,3.0,04:04,,FAILED ,https://musescore.com/user/3636436/scores/5626782,No,Piano,No,train
+2251,Percy Wenrich,By A Garden Gate,Classical,Intermediate,3.0,04:04,,FAILED,https://musescore.com/user/3636436/scores/5626782,No,Piano,No,excluded
 2252,Percy Wenrich,Dance Of The Nymphs,Classical,,2.0,02:26,Yes, ,https://musescore.com/user/3636436/scores/5631213,No,Piano,No,train
 2253,Charles Leslie Johnson,Sweet Memories,Classical,,4.0,03:26,Yes, ,https://musescore.com/user/3636436/scores/5640195,No,Piano,No,train
 2254,Thomas S. Allen,Sweet Illusions,Classical,,5.0,04:42,Yes, ,https://musescore.com/user/3636436/scores/5653557,No,Piano,No,train
@@ -2491,7 +2491,7 @@ File_Number,Composer,Title,Genre,Difficulty,Pages,Duration,Piano_Only,Download_S
 2490,Carl Czerny,"Exercice No. 69, Op. 599",Classical,,2.0,00:48,Yes, ,https://musescore.com/user/36486827/scores/6789635,No,Piano,No,train
 2491,John Stepan Zamecnik,Triumphal March,Classical,,3.0,03:19,Yes, ,https://musescore.com/user/27035762/scores/6794239,No,Piano,No,train
 2492,Carl Czerny,"Schule Des Virtuosen, Op.365",Classical,,4.0,58:50,Yes, ,https://musescore.com/user/34770323/scores/6885610,No,Piano,No,train
-2493,Misc Traditional,Misirlou,Folk,,2.0,02:56,,FAILED ,https://musescore.com/user/22159/scores/6917553,No,Piano,No,train
+2493,Misc Traditional,Misirlou,Folk,,2.0,02:56,,FAILED,https://musescore.com/user/22159/scores/6917553,No,Piano,No,excluded
 2494,Charles A. Tindley,What Are They Doing In Heaven?,Blues,,6.0,03:08,Yes, ,https://musescore.com/user/30313799/scores/7343300,No,Piano,No,train
 2495,John Stepan Zamecnik,Chimes,Classical,,3.0,02:16,Yes, ,https://musescore.com/user/27035762/scores/7381490,No,Piano,No,train
 2496,John Stepan Zamecnik,Roman Festival Music,Classical,,1.0,01:09,Yes, ,https://musescore.com/user/27035762/scores/7381595,No,Piano,No,train
@@ -5317,7 +5317,7 @@ File_Number,Composer,Title,Genre,Difficulty,Pages,Duration,Piano_Only,Download_S
 5316,Melchior Teschner,"All Glory, Laud And Honor",Religious Music,,7.0,06:02,Yes, ,https://musescore.com/user/63954745/scores/10510183,No,Piano,No,train
 5317,Camille Saint-Saëns,"Introduction Et Rondo Capriccioso, Op.28",Classical,,14.0,08:04,Yes, ,https://musescore.com/user/60943807/scores/11589232,No,Piano,No,train
 5318,Rolling Sky,Intersteller Leap,Soundtrack,,5.0,02:19,Yes, ,https://musescore.com/user/69455341/scores/11635978,No,Piano,No,validation
-5319,Toby Fox,Megalovania,Soundtrack,,7.0,03:22,Yes,FAILED ,https://musescore.com/user/39890801/scores/12551302,No,Piano,No,train
+5319,Toby Fox,Megalovania,Soundtrack,,7.0,03:22,Yes,FAILED,https://musescore.com/user/39890801/scores/12551302,No,Piano,No,excluded
 5320,Sergei Rachmaninoff,"10 Preludes, Op.23",Classical,,10.0,03:37,Yes, ,https://musescore.com/user/38235231/scores/1674196,No,Piano,No,train
 5321,Louis Moreau Gottschalk,"Chant De Guerre, Op.78",Classical,,13.0,03:56,Yes, ,https://musescore.com/user/3636436/scores/5402987,No,Piano,No,train
 5322,Carl Czerny,"Schule Des Virtuosen, Op.365",Classical,,2.0,09:31,Yes, ,https://musescore.com/user/34770323/scores/6550732,No,Piano,No,train
@@ -5325,7 +5325,7 @@ File_Number,Composer,Title,Genre,Difficulty,Pages,Duration,Piano_Only,Download_S
 5324,Carl Czerny,"Schule Des Virtuosen, Op.365",Classical,,2.0,10:02,Yes, ,https://musescore.com/user/34770323/scores/7340825,No,Piano,Yes,excluded
 5325,Carl Czerny,"Schule Des Virtuosen, Op.365",Classical,,2.0,21:11,Yes, ,https://musescore.com/user/34770323/scores/7343828,No,Piano,Yes,excluded
 5326,Carl Millöcker,Der Feldprediger,Classical,,12.0,10:40,Yes, ,https://musescore.com/user/27035762/scores/8744916,No,Piano,No,train
-5327,Penthouse,閃光花,Pop,,5.0,03:01,Yes,FAILED ,https://musescore.com/user/33245805/scores/10424386,No,Piano,No,train
+5327,Penthouse,閃光花,Pop,,5.0,03:01,Yes,FAILED,https://musescore.com/user/33245805/scores/10424386,No,Piano,No,excluded
 5328,Victor H. Benke,Girded For Battle Our Forces We Bring,Religious Music,,4.0,01:58,Yes, ,https://musescore.com/user/63954745/scores/11177716,No,Piano,No,train
 5329,DEAD BLONDE,Банкомат,Electronic,,6.0,03:19,Yes, ,https://musescore.com/user/59687179/scores/11990374,No,Piano,No,train
 5330,Pyotr Ilyich Tchaikovsky,"1812 Overture, Op.49",Classical,,24.0,14:55,Yes, ,https://musescore.com/user/60943807/scores/12297388,No,Piano,No,train
