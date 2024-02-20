@@ -17,7 +17,7 @@ df_filtered = df[
 ## Calculate the exact number of files for each split
 total_files = len(df_filtered)
 #print(total_files)
-train_count = 5614
+train_count = 5609
 val_count = 702
 test_count = 702
 
